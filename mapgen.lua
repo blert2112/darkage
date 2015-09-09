@@ -45,9 +45,11 @@ local function generate_stratus(c_id, wherein, ceilin, vm_data, vm_area, minp, m
 	local volume = ((maxp.x-minp.x+1)/area)*((y_max-y_min+1)/area)*((maxp.z-minp.z+1)/area)
 	local pr = PseudoRandom(seed)
 	local blocks = math.floor(stratus_per_volume*volume)
+--	print("  <<"..minetest.get_name_from_content_id(c_id)..">>");
 	if blocks == 0 then
 		blocks = 1
 	end
+--	print("    blocks: "..blocks.." in vol: "..volume.." ("..maxp.x-minp.x+1 ..","..y_max-y_min+1 ..","..maxp.z-minp.z+1 ..")")
 	for i=1,blocks do
 		local x = pr:next(1,stratus_chance)
 		if x == 1 then
@@ -129,6 +131,7 @@ local function generate_stratus(c_id, wherein, ceilin, vm_data, vm_area, minp, m
 						end
 					end
 				end
+--				print("    generated "..i.." blocks in ("..x0..","..y0..","..z0..")")
 			end
 		end
 	end
@@ -189,10 +192,16 @@ local function generate_claylike(c_id, vm_data, vm_area, minp, maxp, seed, chanc
 	return changed
 end
 
+--[[
+DO NOT DO THE FOLLOWING! It will cause MT to crash A LOT with LUA out-of-memory errors.
+
+function darkage_mapgen(vm_data, vm_area, minp, maxp, seed) -- public function, to be used by Lua mapgens
+]]
+
 minetest.register_on_mapgen_init(function(mapgen_params)
 	if mapgen_params.mgname ~= "singlenode" then
 		minetest.register_on_generated(function(minp, maxp, seed)
---			local t = os.clock()
+--			local t0 = os.clock()
 			local vm, emin, emax = minetest.get_mapgen_object("voxelmanip")
 			local vm_data = vm:get_data()
 			local vm_area = VoxelArea:new({MinEdge = emin, MaxEdge = emax})
@@ -213,7 +222,7 @@ minetest.register_on_mapgen_init(function(mapgen_params)
 				vm:set_data(vm_data)
 				vm:write_to_map()
 			end
---			print("[MOD] Darkage: total time : "..os.clock() - t)
+--			print("DARKAGE: total time taken : "..os.clock() - t0)
 		end)
 	end
 end)

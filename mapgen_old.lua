@@ -36,7 +36,7 @@ local c_mud = get_c_id("darkage:mud")
 local function generate_stratus(c_id, wherein, ceilin, vm_data, vm_area, minp, maxp, seed, stratus_chance, radius, radius_y, deep, height_min, height_max)
 	local changed = false
 	if maxp.y < height_min or minp.y > height_max then
-		return changed
+		return vm_data, changed
 	end
 	local stratus_per_volume = 1
 	local area = 45
@@ -45,11 +45,9 @@ local function generate_stratus(c_id, wherein, ceilin, vm_data, vm_area, minp, m
 	local volume = ((maxp.x-minp.x+1)/area)*((y_max-y_min+1)/area)*((maxp.z-minp.z+1)/area)
 	local pr = PseudoRandom(seed)
 	local blocks = math.floor(stratus_per_volume*volume)
---	print("  <<"..minetest.get_name_from_content_id(c_id)..">>");
 	if blocks == 0 then
 		blocks = 1
 	end
---	print("    blocks: "..blocks.." in vol: "..volume.." ("..maxp.x-minp.x+1 ..","..y_max-y_min+1 ..","..maxp.z-minp.z+1 ..")")
 	for i=1,blocks do
 		local x = pr:next(1,stratus_chance)
 		if x == 1 then
@@ -131,11 +129,10 @@ local function generate_stratus(c_id, wherein, ceilin, vm_data, vm_area, minp, m
 						end
 					end
 				end
---				print("    generated "..i.." blocks in ("..x0..","..y0..","..z0..")")
 			end
 		end
 	end
-	return changed
+	return vm_data, changed
 end
 
 local function generate_claylike(c_id, vm_data, vm_area, minp, maxp, seed, chance, minh, maxh, dirt)
@@ -170,7 +167,7 @@ local function generate_claylike(c_id, vm_data, vm_area, minp, maxp, seed, chanc
 							end
 							if num_water_around >= 3 then
 								is_shallow = false
-							end	
+							end
 							if is_shallow then
 								for x1=-divlen,divlen do
 									for z1=-divlen,divlen do
@@ -189,54 +186,43 @@ local function generate_claylike(c_id, vm_data, vm_area, minp, maxp, seed, chanc
 			end
 		end
 	end
-	return changed
+	return vm_data, changed
 end
 
-
+local t_with = 0
+local t_without = 0
 minetest.register_on_generated(function(minp, maxp, seed)
---	local t0 = os.clock()
+
+	local t0 = minetest.get_us_time()
+
 	local vm, emin, emax = minetest.get_mapgen_object("voxelmanip")
 	local vm_data = vm:get_data()
 	local vm_area = VoxelArea:new({MinEdge = emin, MaxEdge = emax})
 	local vm_changed = false
---	local t1 = os.clock()
-	--if generate_claylike(c_mud, vm_data, vm_area, minp, maxp, seed+1, 4, 0, 2, 0)
-	--or generate_claylike(c_silt, vm_data, vm_area, minp, maxp, seed+2, 4, -1, 1, 1)
-	if generate_stratus(c_chalk, {c_air}, {c_stone,c_air,c_water}, vm_data, vm_area, minp, maxp, seed+3, 4, 25, 8, 0, 0, 70)
-		then vm_changed = true end
-	if generate_stratus(c_ors, {c_air}, {c_stone,c_air,c_water}, vm_data, vm_area, minp, maxp, seed+4, 4, 25, 7, 50, 0, 700)
-		then vm_changed = true end
-	if generate_stratus(c_shale, {c_air}, {c_stone,c_air,c_water}, vm_data, vm_area, minp, maxp, seed+5, 4, 23, 7, 50, 0, 70)
-		then vm_changed = true end
-	if generate_stratus(c_slate, {c_air}, {c_stone,c_air,c_water}, vm_data, vm_area, minp, maxp, seed+6, 6, 23, 5, 50, 0, 500)
-		then vm_changed = true end
-	if generate_stratus(c_schist, {c_air}, {c_stone,c_air,c_water}, vm_data, vm_area, minp, maxp, seed+7, 6, 19, 6, 50, 10, 31000)
-		then vm_changed = true end
-	if generate_stratus(c_basalt, {c_air}, {c_stone,c_air,c_water}, vm_data, vm_area, minp, maxp, seed+8, 5, 20, 5, 20, 50, 31000)
-		then vm_changed = true end
-	if generate_stratus(c_marble, {c_air}, {c_stone,c_air,c_water}, vm_data, vm_area, minp, maxp, seed+9, 4, 25, 6, 50, 75, 31000)
-		then vm_changed = true end
-	if generate_stratus(c_serpentine, {c_air}, {c_stone,c_air,c_water}, vm_data, vm_area, minp, maxp, seed+10, 4, 28, 8, 50, 350, 31000)
-		then vm_changed = true end
-	if generate_stratus(c_gniess, {c_air}, {c_stone,c_air,c_water}, vm_data, vm_area, minp, maxp, seed+11, 4, 15, 5, 50, 250, 31000)
-		then vm_changed = true end
---	print("DARKAGE: time taken minus VM transfer : "..os.clock() - t1)
+
+	local t1 = minetest.get_us_time()
+
+	vm_data, vm_changed = generate_claylike(c_mud, vm_data, vm_area, minp, maxp, seed+1, 4, 0, 2, 1)
+	vm_data, vm_changed = generate_claylike(c_silt, vm_data, vm_area, minp, maxp, seed+2, 4, -1, 1, 0)
+	vm_data, vm_changed = generate_stratus(c_chalk, {"default:stone"}, {"default:stone","air"}, vm_data, vm_area, minp, maxp, seed+3, 4, 25, 8, 0, -20, 50)
+	vm_data, vm_changed = generate_stratus(c_ors, {"default:stone"}, {"default:stone","air","default:water_source"}, vm_data, vm_area, minp, maxp, seed+4, 4, 25, 7, 50, -200, 500)
+	vm_data, vm_changed = generate_stratus(c_shale, {"default:stone"}, {"default:stone","air"}, vm_data, vm_area, minp, maxp, seed+5, 4, 23, 7, 50, -50, 20)
+	vm_data, vm_changed = generate_stratus(c_slate, {"default:stone"}, {"default:stone","air"}, vm_data, vm_area, minp, maxp, seed+6, 6, 23, 5, 50, -500, 0)
+	vm_data, vm_changed = generate_stratus(c_schist, {"default:stone"}, {"default:stone","air"}, vm_data, vm_area, minp, maxp, seed+7, 6, 19, 6, 50, -31000, -10)
+	vm_data, vm_changed = generate_stratus(c_basalt, {"default:stone"}, {"default:stone","air"}, vm_data, vm_area, minp, maxp, seed+8, 5, 20, 5, 20, -31000, -50)
+	vm_data, vm_changed = generate_stratus(c_marble, {"default:stone"}, {"default:stone","air"}, vm_data, vm_area, minp, maxp, seed+9, 4, 25, 6, 50, -31000, -75)
+	vm_data, vm_changed = generate_stratus(c_serpentine, {"default:stone"}, {"default:stone","air"}, vm_data, vm_area, minp, maxp, seed+10, 4, 28, 8, 50, -31000, -350)
+	vm_data, vm_changed = generate_stratus(c_gniess, {"default:stone"}, {"default:stone","air"}, vm_data, vm_area, minp, maxp, seed+11, 4, 15, 5, 50, -31000, -250)
+
+	t_without = t_without + (minetest.get_us_time() - t1)
+
 	if vm_changed then
 		vm:set_data(vm_data)
 		vm:write_to_map()
 	end
---	print("DARKAGE: total time taken : "..os.clock() - t0)
+
+	t_with = t_with + (minetest.get_us_time() - t0)
+	print("DARKAGE: total time : "..t_with/1000000.0 .." seconds")
+	print("DARKAGE: total time without vm exchange: "..t_without/1000000.0 .." seconds")
+	print("DARKAGE: total savings : "..(t_with - t_without)/1000000.0 .." seconds")
 end)
-
---[[
-	if generate_stratus(c_chalk, {c_air}, {c_stone,c_air,c_water}, vm_data, vm_area, minp, maxp, seed+3, 4, 25, 8, 0, -20,  50)
-	or generate_stratus(c_ors, {c_air}, {c_stone,c_air,c_water}, vm_data, vm_area, minp, maxp, seed+4, 4, 25, 7, 50, -200,  500)
-	or generate_stratus(c_shale, {c_air}, {c_stone,c_air,c_water}, vm_data, vm_area, minp, maxp, seed+5, 4, 23, 7, 50, -50,  20)
-	or generate_stratus(c_slate, {c_air}, {c_stone,c_air,c_water}, vm_data, vm_area, minp, maxp, seed+6, 6, 23, 5, 50, -500, 0)
-	or generate_stratus(c_schist, {c_air}, {c_stone,c_air,c_water}, vm_data, vm_area, minp, maxp, seed+7, 6, 19, 6, 50, -31000, -10)
-	or generate_stratus(c_basalt, {c_air}, {c_stone,c_air,c_water}, vm_data, vm_area, minp, maxp, seed+8, 5, 20, 5, 20, -31000, -50)
-	or generate_stratus(c_marble, {c_air}, {c_stone,c_air,c_water}, vm_data, vm_area, minp, maxp, seed+9, 4, 25, 6, 50, -31000,  -75)
-	or generate_stratus(c_serpentine, {c_air}, {c_stone,c_air,c_water}, vm_data, vm_area, minp, maxp, seed+10, 4, 28, 8, 50, -31000,  -350)
-	or generate_stratus(c_gniess, {c_air}, {c_stone,c_air,c_water}, vm_data, vm_area, minp, maxp, seed+11, 4, 15, 5, 50, -31000, -250)
-]]
-

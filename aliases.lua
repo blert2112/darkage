@@ -1,7 +1,6 @@
 minetest.register_alias("darkage:sandstone_cobble","default:sandstonebrick")
 minetest.register_alias("darkage:desert_stone_cobble","default:desert_stonebrick")
 
-
 minetest.register_alias("darkage:stair_desert_stone_cobble_wall_half","default:stair_desert_stonebrick_wall_half")
 minetest.register_alias("darkage:slab_desert_stone_cobble_inverted","default:slab_desert_stonebrick_inverted")
 minetest.register_alias("darkage:stair_desert_stone_cobble_inverted","default:stair_desert_stonebrick_inverted")
@@ -28,7 +27,6 @@ minetest.register_alias("darkage:stair_desert_stone_cobble","default:stair_deser
 minetest.register_alias("darkage:panel_desert_stone_cobble_vertical","default:panel_desert_stonebrick_vertical")
 minetest.register_alias("darkage:stair_desert_stone_cobble_inner_inverted","default:stair_desert_stonebrick_inner_inverted")
 minetest.register_alias("darkage:slab_desert_stone_cobble_three_quarter_inverted","default:slab_desert_stonebrick_three_quarter_inverted")
-
 
 minetest.register_alias("darkage:stair_sandstone_cobble_wall_half","default:stair_sandstonebrick_wall_half")
 minetest.register_alias("darkage:slab_sandstone_cobble_inverted","default:slab_sandstonebrick_inverted")

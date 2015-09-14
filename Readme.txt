@@ -5,17 +5,16 @@ Modified again by blert2112
 
 
 
-###Configuration
-Open init.lua
+###Configuration (in init.lua)
 * ENABLE_MAPGEN		= true
-	enable/disable map generation if you dont want to use it
+	- enable/disable map generation if you dont want to use it
 * ENABLE_DECO_NODES	= true
-	enable/disable decoration nodes (funiture and stuff)
+	- enable/disable decoration nodes (funiture and stuff)
 * ENABLE_STAIRS		= true
-	enable/disable stair registration
+	- enable/disable stair registration
 * ENABLE_ALIASES	= false
-	enable/disable aliases
-	disabled by default
+	- enable/disable aliases
+	- disabled by default
 
 
 
@@ -25,6 +24,10 @@ Open init.lua
 
 
 ###Release Notes
+Version 2.0.1
+* updated mapgen to new register_ore configuration
+	- requires minetest build of master dated no earlier than 9/13/2015
+
 Version 2.0
 * updated mapgen to register_ore
 * fixed registration with Moreblocks/StairsPlus

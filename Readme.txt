@@ -20,9 +20,9 @@ _______________________________________________________________
 ###Description
 MapGen nodes
 ------------
-basalt*				gneiss*				ors*
-slate*				chalk*				marble*
-schist*				serpentine*			shale*
+basalt(**)			gneiss(**)				ors(**)
+slate(**)			chalk(**)				marble(**)
+schist(**)			serpentine(**)			shale(**)
 mud					silt
 
 Deco nodes
@@ -52,9 +52,6 @@ _______________________________________________________________
 _______________________________________________________________
 
 ###Release Notes
-Version 2.0.2
-* minor fixes
-
 Version 2.0.1
 * updated mapgen to new register_ore configuration
 	- requires minetest build of master dated no earlier than 9/13/2015

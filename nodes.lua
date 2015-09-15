@@ -170,11 +170,6 @@ minetest.register_node("darkage:schist", {
 	groups = {cracky=3},
 	sounds = default.node_sound_stone_defaults()
 })
-minetest.register_craft({
-	type = "cooking",
-	output = "darkage:gneiss",
-	recipe = "darkage:schist",
-})
 
 -- serpentine
 minetest.register_node("darkage:serpentine", {
@@ -192,11 +187,6 @@ minetest.register_node("darkage:shale", {
 	is_ground_content = true,
 	groups = {crumbly=2,cracky=2},
 	sounds = default.node_sound_stone_defaults()
-})
-minetest.register_craft({
-	type = "cooking",
-	output = "darkage:shale",
-	recipe = "darkage:mud"
 })
 
 -- silt
@@ -258,9 +248,4 @@ minetest.register_craft({
 	type = "cooking",
 	output = "darkage:slate",
 	recipe = "darkage:slate_cobble"
-})
-minetest.register_craft({
-	type = "cooking",
-	output = "darkage:slate",
-	recipe = "darkage:shale"
 })

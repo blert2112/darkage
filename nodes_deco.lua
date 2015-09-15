@@ -444,8 +444,8 @@ minetest.register_node("darkage:darkdirt", {
 minetest.register_craft({
 	output = "darkage:darkdirt 4",
 	recipe = {
-		{"default:dirt","default:dirt"},
-		{"default:gravel","default:gravel"}
+		{"darkage:mud","darkage:silt"},
+		{"default:dirt","default:dirt"}
 	}
 })
 

@@ -1,11 +1,27 @@
 
-local ENABLE_MAPGEN		= true
-local ENABLE_DECO_NODES	= true
-local ENABLE_STAIRS		= true
-local ENABLE_ALIASES	= false
+local ENABLE_MAPGEN = true
+local ENABLE_DECO_NODES = true
+local ENABLE_STAIRS = true
+local ENABLE_ALIASES = false
 
--- end config
+local got_setting
 
+got_setting = minetest.setting_getbool("DARKAGE_enable_mapgen")
+if got_setting ~= nil then
+	ENABLE_MAPGEN = got_setting
+end
+got_setting = minetest.setting_getbool("DARKAGE_enable_deco_nodes")
+if got_setting ~= nil then
+	ENABLE_DECO_NODES = got_setting
+end
+got_setting = minetest.setting_getbool("DARKAGE_enable_stairs")
+if got_setting ~= nil then
+	ENABLE_STAIRS = got_setting
+end
+got_setting = minetest.setting_getbool("DARKAGE_enable_aliases")
+if got_setting ~= nil then
+	ENABLE_ALIASES = got_setting
+end
 
 local path = minetest.get_modpath("darkage")
 

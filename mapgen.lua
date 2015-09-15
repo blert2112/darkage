@@ -12,7 +12,7 @@ local claylike = {
 }
 
 local ores = {
-	{name="chalk",			wherein="stone",		thickness=3,	minY=-20,		maxY=50,	threshold=1.75},
+	{name="chalk",			wherein="stone",		thickness=3,	minY=-30,		maxY=60,	threshold=1.50},
 	{name="ors",			wherein="desert_stone",	thickness=3,	minY=-200,		maxY=500,	threshold=1.50},
 	{name="shale",			wherein="stone",		thickness=4,	minY=-50,		maxY=20,	threshold=1.50},
 	{name="slate",			wherein="stone",		thickness=3,	minY=-500,		maxY=0,		threshold=1.50},

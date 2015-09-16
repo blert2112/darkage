@@ -5,15 +5,29 @@ Modified again by blert2112
 _______________________________________________________________
 
 ###Configuration
-Add the following to minetest.conf:
+There are two configuration methods.
 
+1) Add the following to minetest.conf:
 DARKAGE_enable_mapgen = true
 DARKAGE_enable_deco_nodes = true
 DARKAGE_enable_stairs = true
 DARKAGE_enable_aliases = false
 DARKAGE_enable_stairs_in_creative = true
 
-If you leave these out of minetest.conf default values will be assumed.
+If you leave these out of minetest.conf default values will be
+assumed unless you...
+
+2) Modifiy the following variables:
+	*init.lua
+ENABLE_MAPGEN = true
+ENABLE_DECO_NODES = true
+ENABLE_STAIRS = true
+ENABLE_ALIASES = false
+	*stairs.lua and stairs_deco.lua,
+	 stairsplus.lua and stairsplus_deco.lua,
+	 stairsredo.lua and stairsredo_deco.lua
+ENABLE_CREATIVE = 0
+
 The default values are as listed above.
 _______________________________________________________________
 
@@ -55,6 +69,7 @@ _______________________________________________________________
 Version 2.0.1
 * updated mapgen to new register_ore configuration
 	- requires minetest build of master dated no earlier than 9/13/2015
+	- added minetest.conf configuration variables
 
 Version 2.0
 * updated mapgen to register_ore

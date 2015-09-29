@@ -19,7 +19,7 @@ local ores = {
 	{name="schist",			wherein="stone",		thickness=3,	minY=-31000,	maxY=-10,	threshold=1.75},
 	{name="basalt",			wherein="stone",		thickness=4,	minY=-31000,	maxY=-50,	threshold=0.75},
 	{name="marble",			wherein="stone",		thickness=5,	minY=-31000,	maxY=-75,	threshold=2.00},
-	{name="serpentine",		wherein="stone",		thickness=6,	minY=-31000,	maxY=-350,	threshold=2.50},
+	{name="serpentine",		wherein="stone",		thickness=6,	minY=-31000,	maxY=-300,	threshold=2.50},
 	{name="gneiss",			wherein="stone",		thickness=3,	minY=-31000,	maxY=-250,	threshold=1.75}
 }
 

@@ -2,7 +2,8 @@
 -- iron stick
 minetest.register_craftitem("darkage:iron_stick", {
 	description = "Iron Stick",
-	inventory_image = "darkage_iron_stick.png"
+	inventory_image = "darkage_iron_stick.png",
+	groups = {stick=1}
 })
 minetest.register_craft({
 	output = "darkage:iron_stick 3",

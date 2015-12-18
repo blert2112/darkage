@@ -36,8 +36,8 @@ for i,data in ipairs(claylike) do
 		column_height_min = 1,
 		column_height_max = 2,
 		column_midpoint_factor = 0.5,
-		height_min = data.minY,
-		height_max = data.maxY,
+		y_min = data.minY,
+		y_max = data.maxY,
 		noise_threshold = 0.50,
 		noise_params = {offset=0, scale=1, spread={x=20, y=20, z=10}, seed=ovule+2112+i, octaves=2, persist=0.8}
 	})
@@ -55,8 +55,8 @@ for i,data in ipairs(ores) do
 		column_height_min = data.thickness-2,
 		column_height_max = data.thickness,
 		column_midpoint_factor = 0.5,
-		height_min = data.minY,
-		height_max = data.maxY,
+		y_min = data.minY,
+		y_max = data.maxY,
 		noise_threshold = data.threshold,
 		noise_params = {offset=0, scale=2, spread={x=20, y=20, z=10}, seed=ovule+claylike_count+2112+i, octaves=2, persist=0.8}
 	})
